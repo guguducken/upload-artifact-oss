@@ -5,13 +5,70 @@ import (
 	"os"
 	"strings"
 
-	"github.com/guguducken/action-go-template/pkg/github"
+	"github.com/guguducken/upload-artifact-oss/pkg/config"
+	"github.com/guguducken/upload-artifact-oss/pkg/github"
+	"github.com/guguducken/upload-artifact-oss/pkg/oss"
 	"gopkg.in/yaml.v3"
 )
 
 // WorkflowInputs allow you to specify data that the action expects to use during runtime.
 // GitHub stores input parameters as environment variables.
-var WorkflowInputs = github.Inputs{}
+var WorkflowInputs = github.Inputs{
+	config.EnvOSSProvider: github.Input{
+		Name:        config.EnvOSSProvider,
+		Description: "oss provider used to upload and store artifacts, currently supports " + strings.Join(oss.SupportedProviders, ", "),
+		Required:    true,
+		Default:     oss.CosProvider,
+	},
+	config.EnvOSSAccessKey: github.Input{
+		Name:        config.EnvOSSAccessKey,
+		Description: "access key used to access oss service",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvOSSSecretKey: github.Input{
+		Name:        config.EnvOSSSecretKey,
+		Description: "secret key used to access oss service",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvOSSRegion: github.Input{
+		Name:        config.EnvOSSRegion,
+		Description: "the region where the oss service is located",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvOSSBucket: github.Input{
+		Name:        config.EnvOSSBucket,
+		Description: "the bucket used to store uploaded artifacts in oss",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvOSSStorePath: github.Input{
+		Name:        config.EnvOSSStorePath,
+		Description: "The path where the artifact is stored in the bucket",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvOSSStorageClass: github.Input{
+		Name:        config.EnvOSSStorageClass,
+		Description: "The storage type when the artifact is stored in the bucket",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvArtifactPath: github.Input{
+		Name:        config.EnvArtifactPath,
+		Description: "The path used to obtain the artifact",
+		Required:    true,
+		Default:     "",
+	},
+	config.EnvRetryTimes: github.Input{
+		Name:        config.EnvRetryTimes,
+		Description: "The number of retries that can be made when uploading artifacts，default is 1",
+		Required:    false,
+		Default:     "1",
+	},
+}
 
 // WorkflowOutputs allow you to declare data that an action sets.
 // Actions that run later in a workflow can use the output data set in previously run actions.

@@ -2,8 +2,8 @@ default: build
 
 # You must modify it to yourself information
 AUTHOR=guguducken
-REPOSITORY=action-go-template
-DESCRIPTION=A template repository for creating action written in go language.
+REPOSITORY=upload-artifact-oss
+DESCRIPTION=Upload an artifact to oss.
 ICON=arrow-up
 COLOR=blue
 

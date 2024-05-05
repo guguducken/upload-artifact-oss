@@ -1,7 +1,6 @@
-# Upload Artifact to OSS
-
-## Inputs
-~~~yaml
+name: upload-artifact-oss
+author: guguducken
+description: Upload an artifact to oss.
 inputs:
     access_key:
         description: access key used to access oss service
@@ -32,8 +31,9 @@ inputs:
     storage_class:
         description: The storage type when the artifact is stored in the bucket
         required: true
-~~~
-
-## Outputs
-~~~yaml
-~~~
+runs:
+    using: docker
+    image: Dockerfile
+branding:
+    icon: arrow-up
+    color: blue
